@@ -1,0 +1,105 @@
+<div >
+
+    <nz-steps [nzCurrent]="current">
+        <nz-step [nzTitle]="uploadImage"></nz-step>
+        <nz-step [nzTitle]="textEdit"></nz-step>
+        <nz-step [nzTitle]="Result"></nz-step>
+    </nz-steps>
+    
+      <div *ngIf="uploadContent, then uploadContentTemplate, else textEditingSectionTemplate">
+    
+      </div>
+      <br>
+      <div *ngIf="resultPageContent" style="text-align: center">
+        <div class="result-image" *ngIf="!spinner, else spinnerTemplate">
+          <div style="width: 35%;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 30px;">
+
+            <div *ngFor="let values of base64Image;let i = index" >
+                <div *ngIf="loadingFlags[i]">
+                    <nz-spin nzSimple></nz-spin>
+                </div>
+                <img [src]="values" height="150px" width="130px" class="loaded-image" (load)="imageLoaded(i)">
+            </div>
+
+          </div>
+        </div>
+        
+      </div>
+      <br>
+    
+      <div class="steps-action">
+        <!-- <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+          <span>Previous</span>
+        </button> -->
+        <button nz-button nzType="default" (click)="next()" *ngIf="current < 2" [disabled]="uploadedImage.length==0">
+          <span>Next</span>
+        </button>
+        <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2">
+          <span>Done</span>
+        </button>
+      </div>
+</div>
+
+<!--TEMPLATES-->
+
+  <ng-template #uploadContentTemplate>
+    <div class="steps-content" *ngIf="!resultPageContent" >
+        <nz-upload
+        (nzChange)="fileStatus($event)"
+        [nzShowButton]="uploadButtonVisible"
+        nzAccept=".png,.jpg,.jpeg,.svg"
+        [nzShowUploadList]="uploadImageOptions"
+        [nzBeforeUpload]="beforeUpload"
+        nzListType="picture"
+        [(nzFileList)]="uploadedImage">
+          <button nz-button class="upload-button">Upload</button>
+        </nz-upload>
+    </div>
+    <!-- <div style="padding: 25px;display: flex;gap: 30px;align-items: center;">
+      <div>
+        <label for="projectName" style="color: white;font-size: large;">Project name: </label>
+        <input type="text" id="projectName" [(ngModel)]="projectName" style="border: solid 1px black;padding: 5px;border-radius: 15px;"/>
+      </div>
+      <div style="color:white">|</div>
+      <div style="display: flex;flex-direction:row;gap: 5px;align-items: center;">
+        <label for="projectName" style="color: white;font-size: large;">Logo preference: </label>
+        <textarea [(ngModel)]="logoPreference" style="resize: none;border: solid 1px black;border-radius: 15px;width: 300px;height: 100px;"></textarea>
+      </div>
+    </div> -->
+  </ng-template>
+
+  <ng-template #textEditingSectionTemplate>
+    <div *ngIf="!resultPageContent" style="text-align: center;">
+        <div  *ngIf="!spinner, else spinnerTemplate">
+            <textarea [(ngModel)]="editorContentFromGPT" class="text-area"></textarea>        
+        </div>
+
+    </div>
+  </ng-template>
+
+  <ng-template #spinnerTemplate>
+    <div class="steps-content">
+        <nz-spin nzSimple></nz-spin>
+    </div>
+  </ng-template>
+
+  <ng-template #uploadImage>
+    <div style="color: white;">
+        Upload image
+    </div>
+  </ng-template>
+  <ng-template #textEdit>
+    <div style="color: white;">
+        Edit your prompt
+    </div>
+  </ng-template>
+  <ng-template #Result>
+    <div style="color: white;">
+            Result
+    </div>
+
+  </ng-template>

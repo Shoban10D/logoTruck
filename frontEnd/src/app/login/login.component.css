@@ -1,0 +1,30 @@
+.login-body{
+    /* border: solid 1px red; */
+    width: 100%;
+    height: 96vh;
+}
+
+.login-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: solid 1px black; */
+    height: 96vh;
+
+}
+
+.login-button{
+    font-size: xx-large;
+    letter-spacing: 5px;
+    border: solid 0.5px black;
+    border-radius: 10px;
+    padding: 10px;
+    transition: all ease-in-out 0.3s;
+
+}
+
+.login-button:hover{
+    cursor: pointer;
+    padding: 12px;
+    transition: all ease-in-out 0.3s;
+}

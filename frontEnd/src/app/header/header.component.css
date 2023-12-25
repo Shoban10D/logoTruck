@@ -1,0 +1,12 @@
+.site-page-header{
+    background-color: black;
+    color: white;
+    box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.3);
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+}
+
+.logo-font{
+    color: white;
+}
